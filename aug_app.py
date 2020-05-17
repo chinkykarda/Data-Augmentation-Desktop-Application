@@ -8,6 +8,7 @@ import cv2 as cv
 import csv
 import os
 import random
+import numpy as np
 from tqdm import tqdm_gui
 from PIL import ImageTk, Image
 
@@ -149,102 +150,130 @@ def aug_function(inpath, outputpath, incsvfilepath,outcsvfilepath, augtype, t_fa
             loc = imageFolderPath + a   #location of image
 
 
-            img_class = utils.Image(path = loc) # Create image class
-            img = img_class.getImage()
-            coord = cord
-            if(augtype == 'Scale'):
-    # # Test Scaling
-                output = img_class.transform('scale', coord,s_factor)
-                oname = "scaled_"+a # name of output image
+            # # Brightness and Contrast
+            if(augtype == 'Brightness and Contrast'):
 
-                ocord = output[1] # augmented coordinates
-                csvr = [oname] + output[1]  # line to be written to output csv file
 
-                with open(outcsvfilepath,'a',newline ='') as file:  # 4. write to  csv file
+                image=cv.imread(loc)
+
+                alpha=random.triangular(1,2)
+                beta=random.randint(20,50)
+
+                result=cv.addWeighted(image,alpha,np.zeros(image.shape,image.dtype),0,beta)
+
+
+                oname = "brightness_"+a
+                csvr = [oname] + mylist
+
+                with open(outcsvfilepath,'a',newline ='') as file:       # 4. write to  csv file
                     writer = csv.writer(file)
                     writer.writerow(csvr)
+                #print(mylist)
 
-                drawRectangle(output[0],outputpath ,output[1], output_name = oname )  # for saving output image
-
-            elif(augtype == 'Rotate'):
-                #print("\nrotate")
-    ##Test Rotation
-                output = img_class.transform('rotate', coord, r_factor)
-                oname = "rotated_"+a
-    #   ##print("ONAME",oname)
-    #    ##print("New Bounding Boxes rotation: ", output[1])
-                ocord = output[1]
-                csvr = [oname] + output[1]
-    #    ##print("ocord",ocord)
-                with open(outcsvfilepath,'a',newline ='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(csvr)
-
-                drawRectangle(output[0],outputpath ,output[1], output_name = oname )
-        #drawRectangle(img,outputpath, coord, output_name = "output_original.jpeg")
-
-            elif(augtype == 'Translate'):
-                #print("\ntranslate")
-    # # Test Translation - Horizontal
-                output = img_class.transform('translate', coord, t_factor)
-                oname = "translated_"+a # name of output image
-
-                ocord = output[1] # augmented coordinates
-                csvr = [oname] + output[1]  # line to be written to output csv file
-
-                with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
-                    writer = csv.writer(file)
-                    writer.writerow(csvr)
-
-                drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
-
-            elif(augtype == 'Flip'):
-
-                #print("\nflip")
-    #   # Test Flipping
-                output = img_class.transform('flip', coord, factor)
-                oname = "flipped_"+a # name of output image
-
-                ocord = ' '.join(str(e) for e in output[1]) # augmented coordinates
-
-                csvr = oname + ' ' + ocord  # line to be written to output csv file
-                listcsvr = csvr.split(" ")
-                #print("\noutcsvfilepath: ")
-                #print(outcsvfilepath)
-                #print("\ncsvr: ")
-                #print(csvr)
-                with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
-                    writer = csv.writer(file)
-                    writer.writerow(listcsvr)
-
-                drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
+                #print(oname)
+                drawRectangle(result,outputpath,cord, output_name = oname )
 
 
-            elif(augtype == 'Shear'):
-    # # Test Shear
-                #print("\nshear")
-                output = img_class.transform('shear', coord, factor)
-                oname = "shear_"+a # name of output image
 
-                ocord = output[1] # augmented coordinates
-                csvr = [oname] + output[1]  # line to be written to output csv file
+            else:
 
-                with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
-                    writer = csv.writer(file)
-                    writer.writerow(csvr)
 
-                drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
+                img_class = utils.Image(path = loc) # Create image class
+                img = img_class.getImage()
+                coord = cord
+                if(augtype == 'Scale'):
+        # # Test Scaling
+                    output = img_class.transform('scale', coord,s_factor)
+                    oname = "scaled_"+a # name of output image
 
-            elif(augtype == 'Saturation'):
-                #print("\nhsv")
-                HSV_output_name = "Saturated_"+a
-                img_HSV,bboxes_HSV = utils.RandomHSV(hue=None, saturation=100, brightness=None)(img.copy(), cord.copy())
-                drawRectangle(img_HSV,outputpath,bboxes_HSV,output_name = HSV_output_name ) # for saving output image
+                    ocord = output[1] # augmented coordinates
+                    csvr = [oname] + output[1]  # line to be written to output csv file
 
-                csvr = [HSV_output_name] + bboxes_HSV   # line to be written to output csv file
-                with open(outcsvfilepath, 'a', newline='') as file:  #write to  csv file
+                    with open(outcsvfilepath,'a',newline ='') as file:  # 4. write to  csv file
                         writer = csv.writer(file)
                         writer.writerow(csvr)
+
+                    drawRectangle(output[0],outputpath ,output[1], output_name = oname )  # for saving output image
+
+                elif(augtype == 'Rotate'):
+                    #print("\nrotate")
+        ##Test Rotation
+                    output = img_class.transform('rotate', coord, r_factor)
+                    oname = "rotated_"+a
+        #   ##print("ONAME",oname)
+        #    ##print("New Bounding Boxes rotation: ", output[1])
+                    ocord = output[1]
+                    csvr = [oname] + output[1]
+        #    ##print("ocord",ocord)
+                    with open(outcsvfilepath,'a',newline ='') as file:
+                        writer = csv.writer(file)
+                        writer.writerow(csvr)
+
+                    drawRectangle(output[0],outputpath ,output[1], output_name = oname )
+            #drawRectangle(img,outputpath, coord, output_name = "output_original.jpeg")
+
+                elif(augtype == 'Translate'):
+                    #print("\ntranslate")
+        # # Test Translation - Horizontal
+                    output = img_class.transform('translate', coord, t_factor)
+                    oname = "translated_"+a # name of output image
+
+                    ocord = output[1] # augmented coordinates
+                    csvr = [oname] + output[1]  # line to be written to output csv file
+
+                    with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
+                        writer = csv.writer(file)
+                        writer.writerow(csvr)
+
+                    drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
+
+                elif(augtype == 'Flip'):
+
+                    #print("\nflip")
+        #   # Test Flipping
+                    output = img_class.transform('flip', coord, factor)
+                    oname = "flipped_"+a # name of output image
+
+                    ocord = ' '.join(str(e) for e in output[1]) # augmented coordinates
+
+                    csvr = oname + ' ' + ocord  # line to be written to output csv file
+                    listcsvr = csvr.split(" ")
+                    #print("\noutcsvfilepath: ")
+                    #print(outcsvfilepath)
+                    #print("\ncsvr: ")
+                    #print(csvr)
+                    with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
+                        writer = csv.writer(file)
+                        writer.writerow(listcsvr)
+
+                    drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
+
+
+                elif(augtype == 'Shear'):
+        # # Test Shear
+                    #print("\nshear")
+                    output = img_class.transform('shear', coord, factor)
+                    oname = "shear_"+a # name of output image
+
+                    ocord = output[1] # augmented coordinates
+                    csvr = [oname] + output[1]  # line to be written to output csv file
+
+                    with open(outcsvfilepath,'a',newline ='') as file:  #write to  csv file
+                        writer = csv.writer(file)
+                        writer.writerow(csvr)
+
+                    drawRectangle(output[0],outputpath, output[1], output_name = oname )  # for saving output image
+
+                elif(augtype == 'Saturation'):
+                    #print("\nhsv")
+                    HSV_output_name = "Saturated_"+a
+                    img_HSV,bboxes_HSV = utils.RandomHSV(hue=None, saturation=100, brightness=None)(img.copy(), cord.copy())
+                    drawRectangle(img_HSV,outputpath,bboxes_HSV,output_name = HSV_output_name ) # for saving output image
+
+                    csvr = [HSV_output_name] + bboxes_HSV   # line to be written to output csv file
+                    with open(outcsvfilepath, 'a', newline='') as file:  #write to  csv file
+                            writer = csv.writer(file)
+                            writer.writerow(csvr)
 
 buttonExample = Button(root,text="Help",command=createNewWindow,bg="white",fg="black")
 buttonExample.place(x=1,y=1)
