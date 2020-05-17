@@ -30,7 +30,7 @@ def createNewWindow():
     txt_help= Label(newWindow,text = "HELP",bg="black",fg="white",font=fontStyle).pack(side=TOP, expand=YES)
     T.pack(side=TOP, expand=YES)
     T.configure(font=("Arial", 16),background='#8d8f6d')
-    quote = "1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images.\nNOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECHNIQUE: Select any one of the given Augmentation Technique.\nNOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."
+    quote = "1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images.\nNOTE: Comma seprated csv file.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECHNIQUE: Select any one of the given Augmentation Technique.\nNOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."
     T.insert(END, quote)
     T.config(state=DISABLED)
     newWindow.resizable(0, 0)
