@@ -18,6 +18,7 @@ root.configure(background='#8d8f6d')
 myFont = font.Font(size=20,weight='bold')
 frame=Canvas(root,bg='#ecf296')
 frame.place(relx=0.35,rely=0.1,relwidth=0.3,relheight=0.8)
+frame.grid_propagate(True)
 dict = {'i_input':'None','i_output':'None','csv_input':'None','csv_output':'None','translate_factor':0.2,'rotate_factor':45,'scale_factor':0.5}
 
 def createNewWindow():
@@ -32,6 +33,7 @@ def createNewWindow():
     quote = "1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images.\nNOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECHNIQUE: Select any one of the given Augmentation Technique.\nNOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."
     T.insert(END, quote)
     T.config(state=DISABLED)
+
 
 def path_directory_input():
     directory= filedialog.askdirectory()
@@ -61,10 +63,16 @@ def function_call():
 def scale_active(self):
     if clicked.get()== 'Translate':
         scale_translate.config(state=NORMAL,highlightbackground="GREEN")
+        scale_scale.config(state=DISABLED,length=200,highlightbackground="white")
+        scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
     elif clicked.get()== 'Rotate':
         scale_rotate.config(state=NORMAL,highlightbackground="GREEN")
+        scale_scale.config(state=DISABLED,length=200,highlightbackground="white")
+        scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
     elif clicked.get()== 'Scale':
         scale_scale.config(state=NORMAL,highlightbackground="GREEN")
+        scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
+        scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
 def factor_t(value):
     dict['translate_factor']  =value
 def factor_r(value):
@@ -265,17 +273,17 @@ txtscale= Label(frame,text = "Scaling factor:",bg="black",fg="white")
 scale_translate= Scale( frame, from_ = 0, to = 1, orient = HORIZONTAL,resolution = 0.1,command=factor_t,bg="white")
 txttranslate.grid(row=5,column=0)
 scale_translate.grid(row=5,column=1,padx=10, pady=10)
-scale_translate.config(state=DISABLED,length=200)
+scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
 
 scale_rotate= Scale( frame, from_ = 0, to = 360, orient = HORIZONTAL,resolution = 1,command=factor_r,bg="white")
 txtrotate.grid(row=6,column=0)
 scale_rotate.grid(row=6,column=1,padx=10, pady=10)
-scale_rotate.config(state=DISABLED,length=200)
+scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
 
 scale_scale= Scale( frame, from_ = 0, to = 1, orient = HORIZONTAL,resolution = 0.1,command=factor_s,bg="white")
 txtscale.grid(row=7,column=0)
 scale_scale.grid(row=7,column=1,padx=10, pady=10)
-scale_scale.config(state=DISABLED,length=200)
+scale_scale.config(state=DISABLED,length=200,highlightbackground="white")
 
 call=Button(frame,text="Start",command=function_call,bg='white',activebackground='linen',height = 1, width = 25)
 call.grid(row=8,column=0,padx=10, pady=10,columnspan=2)
