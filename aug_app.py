@@ -12,7 +12,7 @@ from tqdm import tqdm_gui
 from PIL import ImageTk, Image
 
 root = Tk()
-root.geometry("1200x800")
+root.geometry("1600x900")
 root.title("Data Augmentation DESKTOP")
 root.configure(background='#8d8f6d')
 myFont = font.Font(size=20,weight='bold')
