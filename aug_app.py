@@ -22,14 +22,15 @@ dict = {'i_input':'None','i_output':'None','csv_input':'None','csv_output':'None
 
 def createNewWindow():
     newWindow = Toplevel(root)
-    newWindow.configure(background="white")
+    newWindow.configure(background="#ecf296")
     S = Scrollbar(newWindow)
     T = Text(newWindow)
-    S.place(relx=0.5,rely=0.3,anchor="center")
-    T.place(relx=0.5,rely=0.3,anchor="center")
-    quote = """1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images. NOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECNIQUE: Select any one of the given Augmentation Technique. NOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."""
+    txt_help= Label(newWindow,text = "HELP",bg="black",fg="white").place(relx=0.5,rely=0.1,anchor="center")
+    S.place(relx=0.5,rely=0.5,anchor="center")
+    T.place(relx=0.5,rely=0.5,anchor="center")
+    T.configure(font=("Arial", 16),background='#8d8f6d')
+    quote = "1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images.\nNOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECHNIQUE: Select any one of the given Augmentation Technique.\nNOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."
     T.insert(END, quote)
-
 
 def path_directory_input():
     directory= filedialog.askdirectory()
