@@ -8,34 +8,33 @@ import cv2 as cv
 import csv
 import os
 import random
-import numpy as np
 from tqdm import tqdm_gui
 from PIL import ImageTk, Image
 
 root = Tk()
-root.geometry("1750x950")
+root.geometry("1000x700")
 root.title("Data Augmentation DESKTOP")
 root.configure(background='#8d8f6d')
 myFont = font.Font(size=20,weight='bold')
 frame=Canvas(root,bg='#ecf296')
-frame.place(relx=0.35,rely=0.1,relwidth=0.3,relheight=0.8)
+frame.pack(side=TOP, expand=YES)
 frame.grid_propagate(True)
 dict = {'i_input':'None','i_output':'None','csv_input':'None','csv_output':'None','translate_factor':0.2,'rotate_factor':45,'scale_factor':0.5}
 
 def createNewWindow():
     newWindow = Toplevel(root)
+    newWindow.geometry("900x400")
     newWindow.configure(background="#ecf296")
-    S = Scrollbar(newWindow)
     T = Text(newWindow)
-    txt_help= Label(newWindow,text = "HELP",bg="black",fg="white").place(relx=0.5,rely=0.1,anchor="center")
-    S.place(relx=0.5,rely=0.5,anchor="center")
-    T.place(relx=0.5,rely=0.5,anchor="center")
+    fontStyle = font.Font(size=20)
+    txt_help= Label(newWindow,text = "HELP",bg="black",fg="white",font=fontStyle).pack(side=TOP, expand=YES)
+    T.pack(side=TOP, expand=YES)
     T.configure(font=("Arial", 16),background='#8d8f6d')
     quote = "1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images.\nNOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECHNIQUE: Select any one of the given Augmentation Technique.\nNOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."
     T.insert(END, quote)
     T.config(state=DISABLED)
-
-
+    newWindow.resizable(0, 0)
+    
 def path_directory_input():
     directory= filedialog.askdirectory()
     dict['i_input']=directory
