@@ -111,7 +111,7 @@ def write(img,outputpath, str_output = "output.jpeg"):
     #outputpath = '/home/shalini/Desktop/test_impl'     # 1. path of directory where augmented images are to be stored
     cv.imwrite(os.path.join(outputpath,str_output), img)
     #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-    image_path=outputpath+'/'+ str_output
+    image_path=os.path.join(outputpath, str_output)
     canvas=Canvas(frame,width=200,height=200)
     canvas.grid(row=8,column=0)
     img_show = ImageTk.PhotoImage(Image.open(image_path))
@@ -124,7 +124,7 @@ def aug_function(inpath, outputpath, incsvfilepath,outcsvfilepath, augtype, t_fa
     #print(augtype)
     #print("\n")
 
-    inpath = inpath + '/'
+    
 
     file1 = open(incsvfilepath, 'r') # 2. open file containing bounding box coordinates
     lines = file1.readlines()
@@ -146,7 +146,7 @@ def aug_function(inpath, outputpath, incsvfilepath,outcsvfilepath, augtype, t_fa
             a = x[0] # image filename
 
             imageFolderPath = inpath # 3. input image folder path
-            loc = imageFolderPath + a   #location of image
+            loc = os.path.join(imageFolderPath, a)   #location of image
 
 
             # # Brightness and Contrast
