@@ -24,20 +24,10 @@ def createNewWindow():
     newWindow = Toplevel(root)
     newWindow.configure(background="white")
     S = Scrollbar(newWindow)
-    T = Text(newWindow, height=50, width=50)
-    S.pack(side=RIGHT, fill=Y)
-    T.pack(side=LEFT, fill=Y)
-    S.config(command=T.yview)
-    T.config(yscrollcommand=S.set)
-    quote = """HAMLET: To be, or not to be--that is the question:
-    Whether 'tis nobler in the mind to suffer
-    The slings and arrows of outrageous fortune
-    Or to take arms against a sea of troubles
-    And by opposing end them. To die, to sleep--
-    No more--and by a sleep to say we end
-    The heartache, and the thousand natural shocks
-    That flesh is heir to. 'Tis a consummation
-    Devoutly to be wished."""
+    T = Text(newWindow)
+    S.place(relx=0.5,rely=0.3,anchor="center")
+    T.place(relx=0.5,rely=0.3,anchor="center")
+    quote = """1. INPUT IMAGE: Select the folder which contains images to be augmented.\n\n2. INPUT BOUNDING BOXES: Select the file which contains Bounding box of the images. NOTE: File must me in .txt format seprated by comma.\n\n3. OUTPUT IMAGE: Select/Create the folder to save the augmented images. \n\n4. OUTPUT BOUNDING BOXES : Create the default .csv file path to store new bounding boxes.\n\n4. TECNIQUE: Select any one of the given Augmentation Technique. NOTE: If Rotation, Scale or Translate is selected provide Rotation, Scale or Translate respectively.\n\n5. Press Start."""
     T.insert(END, quote)
 
 
