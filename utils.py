@@ -204,6 +204,7 @@ class Image:
         return [flipHorizontal, bounding_box]
 
     def shear(self, bounding_box, factor ):
+        factor = 0.5
         shear_factor=(-factor, factor)
         shear_factor = random.uniform(*shear_factor)
         image_width, image_height = self.image.shape[1], self.image.shape[0]

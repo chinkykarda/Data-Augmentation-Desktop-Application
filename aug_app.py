@@ -8,6 +8,7 @@ import cv2 as cv
 import csv
 import os
 import random
+import numpy as np
 from tqdm import tqdm_gui
 from PIL import ImageTk, Image
 
@@ -73,7 +74,7 @@ def scale_active(self):
         scale_scale.config(state=NORMAL,highlightbackground="GREEN")
         scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
         scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
-   elif clicked.get()=='Shear' or  clicked.get()=='Brightness and Contrast' or clicked.get()=='Flip' or clicked.get()=='Saturation':
+    elif clicked.get()=='Shear' or  clicked.get()=='Brightness and Contrast' or clicked.get()=='Flip' or clicked.get()=='Saturation':
         scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
         scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
         scale_scale.config(state=DISABLED,length=200,highlightbackground="white")
@@ -235,7 +236,7 @@ def aug_function(inpath, outputpath, incsvfilepath,outcsvfilepath, augtype, t_fa
 
                     #print("\nflip")
         #   # Test Flipping
-                    output = img_class.transform('flip', coord, factor)
+                    output = img_class.transform('flip', coord)
                     oname = "flipped_"+a # name of output image
 
                     ocord = ' '.join(str(e) for e in output[1]) # augmented coordinates
@@ -256,7 +257,7 @@ def aug_function(inpath, outputpath, incsvfilepath,outcsvfilepath, augtype, t_fa
                 elif(augtype == 'Shear'):
         # # Test Shear
                     #print("\nshear")
-                    output = img_class.transform('shear', coord, factor)
+                    output = img_class.transform('shear', coord)
                     oname = "shear_"+a # name of output image
 
                     ocord = output[1] # augmented coordinates
