@@ -73,6 +73,11 @@ def scale_active(self):
         scale_scale.config(state=NORMAL,highlightbackground="GREEN")
         scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
         scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
+   elif clicked.get()=='Shear' or  clicked.get()=='Brightness and Contrast' or clicked.get()=='Flip' or clicked.get()=='Saturation':
+        scale_rotate.config(state=DISABLED,length=200,highlightbackground="white")
+        scale_translate.config(state=DISABLED,length=200,highlightbackground="white")
+        scale_scale.config(state=DISABLED,length=200,highlightbackground="white")
+        
 def factor_t(value):
     dict['translate_factor']  =value
 def factor_r(value):
