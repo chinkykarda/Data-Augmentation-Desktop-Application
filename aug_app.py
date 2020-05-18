@@ -118,10 +118,7 @@ def write(img,outputpath, str_output = "output.jpeg"):
     cv.imwrite(os.path.join(outputpath,str_output), img)
     #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
     image_path=os.path.join(outputpath, str_output)
-    canvas=Canvas(frame,width=200,height=200)
-    canvas.grid(row=8,column=0)
-    img_show = ImageTk.PhotoImage(Image.open(image_path))
-    canvas.create_image(20,20,anchor=NW,image=img_show)
+    
     #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
     #The Pack geometry manager packs widgets in rows or columns.
 
